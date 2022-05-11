@@ -2,6 +2,7 @@ package com.caroline.springbootmall.dao.impl;
 
 import com.caroline.springbootmall.dao.ProductDao;
 import com.caroline.springbootmall.dao.repository.ProductRepository;
+import com.caroline.springbootmall.dto.ProductRequestDto;
 import com.caroline.springbootmall.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,7 +24,10 @@ public class ProductDaoJpaImpl implements ProductDao {
             return null;
         }
 
+    }
 
-
+    @Override
+    public Product createProduct(ProductRequestDto productDto) {
+        return productRepo.save(ProductRequestDto.convertToProduct(productDto));
     }
 }

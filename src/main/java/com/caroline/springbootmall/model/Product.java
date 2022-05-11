@@ -1,6 +1,7 @@
 package com.caroline.springbootmall.model;
 
 import com.caroline.springbootmall.constant.ProductCategory;
+import com.caroline.springbootmall.dto.ProductRequestDto;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,5 +26,6 @@ public class Product {
     private String description;
     private LocalDate createdDate;
     private LocalDate lastModifiedDate;
+
 
 }
