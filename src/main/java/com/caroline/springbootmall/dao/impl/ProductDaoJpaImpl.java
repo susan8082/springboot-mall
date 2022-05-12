@@ -3,6 +3,7 @@ package com.caroline.springbootmall.dao.impl;
 import com.caroline.springbootmall.constant.ProductCategory;
 import com.caroline.springbootmall.dao.ProductDao;
 import com.caroline.springbootmall.dao.repository.ProductRepository;
+import com.caroline.springbootmall.dto.ProductQueryParams;
 import com.caroline.springbootmall.dto.ProductRequestDto;
 import com.caroline.springbootmall.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,8 +55,9 @@ public class ProductDaoJpaImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getAllProducts(ProductCategory category, String search) {
-
+    public List<Product> getAllProducts(ProductQueryParams productQueryParams) {
+        ProductCategory category = productQueryParams.getCategory();
+        String search = productQueryParams.getSearch();
         if (category != null && search != null){
             return productRepo.findAllByCategoryAndProductNameContaining(category, search);
         }else if (category != null){

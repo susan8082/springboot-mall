@@ -1,6 +1,7 @@
 package com.caroline.springbootmall.controller;
 
 import com.caroline.springbootmall.constant.ProductCategory;
+import com.caroline.springbootmall.dto.ProductQueryParams;
 import com.caroline.springbootmall.dto.ProductRequestDto;
 import com.caroline.springbootmall.model.Product;
 import com.caroline.springbootmall.service.ProductService;
@@ -60,7 +61,10 @@ public class ProductController {
     @GetMapping("/products")
     public ResponseEntity<List<Product>> getAllProducts(
             @RequestParam(required = false) ProductCategory category, @RequestParam(required = false) String search){
-        List<Product> products = productService.getAllProducts(category , search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setCategory(category);
+        productQueryParams.setSearch(search);
+        List<Product> products = productService.getAllProducts(productQueryParams);
             return ResponseEntity.status(HttpStatus.OK).body(products);
     }
 
