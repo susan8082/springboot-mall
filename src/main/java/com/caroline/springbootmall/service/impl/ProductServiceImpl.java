@@ -37,8 +37,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProduct() {
-        return productDao.getAllProduct();
+    public List<Product> getAllProducts() {
+        return productDao.getAllProducts();
     }
 
 }

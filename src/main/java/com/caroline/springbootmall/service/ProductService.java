@@ -16,5 +16,5 @@ public interface ProductService {
 
     void deleteProductById(Integer productId);
 
-    List<Product> getAllProduct();
+    List<Product> getAllProducts();
 }
