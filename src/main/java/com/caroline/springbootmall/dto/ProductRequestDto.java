@@ -8,6 +8,7 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -33,8 +34,7 @@ public class ProductRequestDto {
         productEntity.setPrice(productRequestDto.getPrice());
         productEntity.setStock(productRequestDto.getStock());
         productEntity.setDescription(productRequestDto.getDescription());
-        productEntity.setCreatedDate(LocalDate.now());
-        productEntity.setLastModifiedDate(LocalDate.now());
+        productEntity.setLastModifiedDate(LocalDateTime.now());
         return productEntity;
     }
 }

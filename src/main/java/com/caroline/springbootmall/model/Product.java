@@ -8,6 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -24,8 +25,8 @@ public class Product {
     private Integer price;
     private Integer stock;
     private String description;
-    private LocalDate createdDate;
-    private LocalDate lastModifiedDate;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
 
 
 }
