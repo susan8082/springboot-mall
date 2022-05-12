@@ -52,4 +52,9 @@ public class ProductDaoJpaImpl implements ProductDao {
         System.out.println("deleteProductById:"+result);
     }
 
+    @Override
+    public List<Product> getAllProduct() {
+        return  productRepo.findAll();
+    }
+
 }
