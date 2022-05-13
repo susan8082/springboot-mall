@@ -21,5 +21,6 @@ public class ProductResponseDto {
     private Integer size;
     private String descOrAsc;
     private String orderBy;
+    private Long total;
     private List<Product> products;
 }

@@ -8,15 +8,16 @@ import com.caroline.springbootmall.model.Product;
 import com.caroline.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
 
+@Validated
 @RestController
 public class ProductController {
 
@@ -37,7 +38,7 @@ public class ProductController {
     public ResponseEntity<Product> createProduct(@RequestBody @Valid ProductRequestDto productDto){
 
         Product returnProduct = productService.createProduct(productDto);
-            return ResponseEntity.status(HttpStatus.CREATED).body(returnProduct);
+        return ResponseEntity.status(HttpStatus.CREATED).body(returnProduct);
     }
 
     @PutMapping("/products/{productId}")
@@ -47,24 +48,24 @@ public class ProductController {
         if (product == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-            productService.updateProduct(productId, productDto);
+        productService.updateProduct(productId, productDto);
 
-            Product updatedProduct = productService.getProductById(productId);
-            return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
+        Product updatedProduct = productService.getProductById(productId);
+        return ResponseEntity.status(HttpStatus.OK).body(updatedProduct);
 
     }
 
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer productId){
 //        Product product = productService.getProductById(productId);
-            productService.deleteProductById(productId);
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        productService.deleteProductById(productId);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/products")
     public ResponseEntity<ProductResponseDto> getAllProducts(
             @RequestParam(required = false) ProductCategory category, @RequestParam(required = false) String search,
-            @RequestParam(defaultValue = "0") Integer pageIndex ,  @RequestParam(defaultValue = "5") Integer size,
+            @RequestParam(defaultValue = "0")  @Min(0) Integer pageIndex ,  @RequestParam(defaultValue = "5") @Max (1000) @Min(1) Integer size,
             @RequestParam(defaultValue = "desc") String descOrAsc, @RequestParam(defaultValue = "price") String orderBy){
         ProductQueryParams productQueryParams = new ProductQueryParams();
         productQueryParams.setCategory(category);
@@ -73,8 +74,9 @@ public class ProductController {
         productQueryParams.setSize(size);
         productQueryParams.setSort(descOrAsc, orderBy);
         Page<Product> products = productService.getAllProducts(productQueryParams);
-        ProductResponseDto resDto = new ProductResponseDto(category, search, pageIndex, size, descOrAsc, orderBy, products.getContent());
+        ProductResponseDto resDto = new ProductResponseDto(category, search, pageIndex, size, descOrAsc, orderBy, products.getTotalElements(), products.getContent());
         return ResponseEntity.status(HttpStatus.OK).body(resDto);
     }
 
 }
+
