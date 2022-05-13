@@ -2,6 +2,8 @@ package com.caroline.springbootmall.dao.repository;
 
 import com.caroline.springbootmall.constant.ProductCategory;
 import com.caroline.springbootmall.model.Product;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -18,10 +20,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     List<Product> findByProductId(Integer productID);
 
-    List<Product> findAllByCategory(ProductCategory category);
+    Page<Product> findAllByCategory(ProductCategory category, Pageable paging);
 
-    List<Product> findAllByProductNameContaining(String search);
+    Page<Product> findAllByProductNameContaining(String search, Pageable paging);
 
-    List<Product> findAllByCategoryAndProductNameContaining(ProductCategory category, String search);
+    Page<Product> findAllByCategoryAndProductNameContaining(ProductCategory category, String search, Pageable paging);
 
 }

@@ -7,6 +7,7 @@ import com.caroline.springbootmall.dto.ProductRequestDto;
 import com.caroline.springbootmall.model.Product;
 import com.caroline.springbootmall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,7 +40,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts(ProductQueryParams productQueryParams) {
+    public Page<Product> getAllProducts(ProductQueryParams productQueryParams) {
         return productDao.getAllProducts(productQueryParams);
     }
 

@@ -7,6 +7,9 @@ import com.caroline.springbootmall.dto.ProductQueryParams;
 import com.caroline.springbootmall.dto.ProductRequestDto;
 import com.caroline.springbootmall.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
@@ -55,17 +58,18 @@ public class ProductDaoJpaImpl implements ProductDao {
     }
 
     @Override
-    public List<Product> getAllProducts(ProductQueryParams productQueryParams) {
+    public Page<Product> getAllProducts(ProductQueryParams productQueryParams) {
         ProductCategory category = productQueryParams.getCategory();
         String search = productQueryParams.getSearch();
+        Pageable paging = PageRequest.of(productQueryParams.getPageIndex(), productQueryParams.getSize(), productQueryParams.getSort());
         if (category != null && search != null){
-            return productRepo.findAllByCategoryAndProductNameContaining(category, search);
+            return productRepo.findAllByCategoryAndProductNameContaining(category, search, paging);
         }else if (category != null){
-            return productRepo.findAllByCategory(category);
+            return productRepo.findAllByCategory(category, paging);
         }else if (search != null){
-            return productRepo.findAllByProductNameContaining(search);
+            return productRepo.findAllByProductNameContaining(search, paging);
         }else{
-            return productRepo.findAll();
+            return productRepo.findAll(paging);
         }
 
     }
