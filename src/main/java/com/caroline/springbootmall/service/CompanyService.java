@@ -12,7 +12,7 @@ public interface CompanyService {
 
     Company getCompanyByCompanyNum(String companyNum);
 
-//    Company createCompany(CompanyRequestDto CompanyDto);
+    Company createCompany(CompanyRequestDto CompanyDto);
 
 //    void updateProduct(Integer productId, ProductRequestDto productDto);
 //

@@ -1,6 +1,7 @@
 package com.caroline.springbootmall.controller;
 
 import com.caroline.springbootmall.constant.ProductCategory;
+import com.caroline.springbootmall.dto.CompanyRequestDto;
 import com.caroline.springbootmall.dto.ProductQueryParams;
 import com.caroline.springbootmall.dto.ProductRequestDto;
 import com.caroline.springbootmall.dto.ProductResponseDto;
@@ -36,12 +37,12 @@ public class CompanyController {
         }
     }
 
-//    @PostMapping("/companys")
-//    public ResponseEntity<Product> createCompant(@RequestBody @Valid CompanyRequestDto companyDto){
-//
-//        Product returnProduct = companyService.createProduct(companyDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(returnProduct);
-//    }
+    @PostMapping("/companys")
+    public ResponseEntity<Company> createCompany(@RequestBody @Valid CompanyRequestDto companyDto){
+
+        Company returnCompany = companyService.createCompany(companyDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(returnCompany);
+    }
 
 
 
