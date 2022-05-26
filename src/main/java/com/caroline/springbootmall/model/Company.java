@@ -1,13 +1,9 @@
 package com.caroline.springbootmall.model;
 
-import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -20,8 +16,13 @@ public class Company {
     private String companyNumber;
     private String name;
     private String type;
-    private String dateOfCreation;
+    private LocalDate dateOfCreation;
     //register web account
-    private LocalDateTime TimeOfRegister;
+    private LocalDateTime timeOfRegister;
+    private String jurisdiction;
+    private String companyStatus;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="companyAddressId", referencedColumnName = "addressId")
+    private Address registeredOfficeAddress;
 
 }

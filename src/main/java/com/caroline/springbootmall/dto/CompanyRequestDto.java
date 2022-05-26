@@ -20,7 +20,7 @@ public class CompanyRequestDto {
     @NotNull
     private String name;
 
-    public static Company convertToProduct(CompanyRequestDto companyDto) {
+    public static Company convertToCompany(CompanyRequestDto companyDto) {
         Company company = new Company();
         company.setCompanyNumber(companyDto.getCompanyNumber());
         company.setName(companyDto.getName());

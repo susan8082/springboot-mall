@@ -6,6 +6,7 @@ import com.caroline.springbootmall.dao.ProductDao;
 import com.caroline.springbootmall.dao.repository.CompanyRepository;
 import com.caroline.springbootmall.dao.repository.ProductRepository;
 import com.caroline.springbootmall.dto.CompanyRequestDto;
+import com.caroline.springbootmall.dto.CompanySyncResponseDto;
 import com.caroline.springbootmall.dto.ProductQueryParams;
 import com.caroline.springbootmall.dto.ProductRequestDto;
 import com.caroline.springbootmall.model.Company;
@@ -37,14 +38,28 @@ public class CompanyDaoJpaImpl implements CompanyDao {
 //    }
 
     @Override
-    public Company getCompanyByCompanyNum(String companyNumber) {
+    public Company getCompanyByCompanyNum(String  companyNumber) {
         return companyRepo.findByCompanyNumber(companyNumber);
     }
 
     @Override
     public Company createCompany(CompanyRequestDto companyDto) {
-        Company company = CompanyRequestDto.convertToProduct( companyDto);
+        Company company = CompanyRequestDto.convertToCompany( companyDto);
         return companyRepo.save(company);
+    }
+
+    @Override
+    public void updateCompany(String companyNum, CompanyRequestDto company) {
+        Company originCompany = getCompanyByCompanyNum(companyNum);
+        originCompany.setName(company.getName());
+        companyRepo.save(originCompany);
+    }
+
+    @Override
+    public void updateCompany(String companyNum, CompanySyncResponseDto companyRequestDto) {
+        Company originCompany = getCompanyByCompanyNum(companyNum);
+        Company updateCompany = CompanySyncResponseDto.setCompanySyncInfo(companyRequestDto, originCompany);
+        companyRepo.save(updateCompany);
     }
 
 //    @Override

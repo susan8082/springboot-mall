@@ -1,62 +1,48 @@
 package com.caroline.springbootmall.service.impl;
 
+import com.caroline.springbootmall.dao.CompanyDao;
+import com.caroline.springbootmall.dto.CompanyRequestDto;
+import com.caroline.springbootmall.dto.CompanySyncResponseDto;
 import com.caroline.springbootmall.model.Company;
+import com.caroline.springbootmall.service.CompanyService;
 import com.caroline.springbootmall.service.CompanySyncService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
 import java.util.List;
 
 @Service
-public class CompanyServiceImpl implements CompanySyncService {
+public class CompanyServiceImpl implements CompanyService {
 
-    final String URI = "https://api.company-information.service.gov.uk/%s/%s";
-    final String field = "company";
 
+    @Autowired
+    private CompanyDao companyDao;
 
     @Override
-    public Company syncCompanyByCompanyNum(String companyNum) {
-
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(new URI(String.format(URI, field, companyNum)))
-                    .header("Authorization", "Basic NTE4MDEwZTYtNTU2OC00ZjkxLWEyYWItM2NmZmU5ZDNhZGM2Og==")
-                    .GET()
-                    .build();
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
-            System.out.println("String.format(URI, field, companyNum):"+String.format(URI, field, companyNum));
-            System.out.println("request.uri():"+request.uri());
-            System.out.println(response);
-            System.out.println(response.body());
-
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-
-        return null;
+    public Company getCompanyByCompanyNum(String companyNum) {
+        return companyDao.getCompanyByCompanyNum(companyNum);
     }
 
     @Override
-    public Company syncAllCompany(List<String> companyNum) {
-        return null;
+    public Company createCompany(CompanyRequestDto companyDto) {
+        return companyDao.createCompany(companyDto);
+    }
+
+    @Override
+    public void updateCompany(String companyNum, CompanyRequestDto companyReqDto) {
+       companyDao.updateCompany(companyNum, companyReqDto);
+    }
+
+    @Override
+    public void updateCompany(String companyNum, CompanySyncResponseDto companySyncResponseDto) {
+        companyDao.updateCompany(companyNum, companySyncResponseDto);
     }
 }
-
-
-//    @Override
-//    public void updateProduct(Integer productId, ProductRequestDto productDto) {
-//        productDao.updateProduct(productId, productDto);
-//    }
 //
 //    @Override
 //    public void deleteProductById(Integer productId) {

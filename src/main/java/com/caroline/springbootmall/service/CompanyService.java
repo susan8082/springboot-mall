@@ -2,6 +2,7 @@ package com.caroline.springbootmall.service;
 
 
 import com.caroline.springbootmall.dto.CompanyRequestDto;
+import com.caroline.springbootmall.dto.CompanySyncResponseDto;
 import com.caroline.springbootmall.dto.ProductQueryParams;
 import com.caroline.springbootmall.dto.ProductRequestDto;
 import com.caroline.springbootmall.model.Company;
@@ -12,9 +13,11 @@ public interface CompanyService {
 
     Company getCompanyByCompanyNum(String companyNum);
 
-    Company createCompany(CompanyRequestDto CompanyDto);
+    Company createCompany(CompanyRequestDto companyRequestDto);
 
-//    void updateProduct(Integer productId, ProductRequestDto productDto);
+    void updateCompany(String companyNum, CompanyRequestDto companyRequestDto);
+
+    void updateCompany(String companyNum, CompanySyncResponseDto companySyncRequestDto);
 //
 //    void deleteProductById(Integer productId);
 //

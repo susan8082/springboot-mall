@@ -44,6 +44,15 @@ public class CompanyController {
         return ResponseEntity.status(HttpStatus.CREATED).body(returnCompany);
     }
 
+    @PatchMapping("/companys/{companyNumber}")
+    public ResponseEntity<Company> updateCompany(@PathVariable String companyNumber, @RequestBody CompanyRequestDto companyDto){
+
+        companyService.updateCompany(companyNumber, companyDto);
+
+        Company updateCompany = companyService.getCompanyByCompanyNum(companyNumber);
+        return ResponseEntity.status(HttpStatus.OK).body(updateCompany);
+    }
+
 
 
 }
