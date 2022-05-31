@@ -2,10 +2,7 @@ package com.caroline.springbootmall.service.impl;
 
 import com.caroline.springbootmall.dto.CompanySyncResponseDto;
 import com.caroline.springbootmall.model.Company;
-import com.caroline.springbootmall.service.CompanyDownloadService;
-import com.caroline.springbootmall.service.CompanyService;
-import com.caroline.springbootmall.service.CompanySyncService;
-import com.caroline.springbootmall.service.UtilService;
+import com.caroline.springbootmall.service.*;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -24,24 +21,24 @@ import java.util.List;
 @Service
 public class CompanyDownloadServiceImpl implements CompanyDownloadService {
 
-//    http://download.companieshouse.gov.uk/BasicCompanyDataAsOneFile-2022-05-01.zip
-    String scheme = "http";
-    String host = "download.companieshouse.gov.uk";
-    String field = "BasicCompanyDataAsOneFile";
-    String targetDate = "2022-05-01";
-    String fileType=".zip";
-
+    final String scheme = "http";
+    final String host = "download.companieshouse.gov.uk";
+    final String field = "BasicCompanyDataAsOneFile";
+    final String fileType=".zip";
 
     @Autowired
     private UtilService utilService;
 
-
+    @Autowired
+    private FileService fileService;
 
     @Override
     public void downloadMonthlyCompanyData(String date) {
 
         try {
-            FileUtils.copyURLToFile(new URL(utilService.buildUrlPath(scheme, host, String.format("/%s-%s%s", field,targetDate, fileType ))), new File(String.format("%s%s%s-%s%s", new File("").getAbsolutePath(), File.separator, field, date, fileType)));
+            URL resourceUrl =  new URL(utilService.buildUrlPath(scheme, host, String.format("/%s-%s%s", field, date, fileType )));
+            File targetFile = new File(String.format("%s%s%s-%s%s", new File("").getAbsolutePath(), File.separator, field, date, fileType));
+            fileService.downloadFileFromUrl(resourceUrl, targetFile);
         } catch (MalformedURLException e) {
             e.printStackTrace();
         } catch (IOException e) {

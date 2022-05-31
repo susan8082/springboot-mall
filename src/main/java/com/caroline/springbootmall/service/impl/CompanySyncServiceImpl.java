@@ -4,10 +4,7 @@ import com.caroline.springbootmall.dto.CompanySyncResponseDto;
 import com.caroline.springbootmall.model.Company;
 import com.caroline.springbootmall.service.CompanyService;
 import com.caroline.springbootmall.service.CompanySyncService;
-//import org.apache.tomcat.util.http.fileupload.FileUtils;
 import com.caroline.springbootmall.service.UtilService;
-import org.apache.commons.io.FileUtils;
-import org.apache.http.client.utils.URIBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,13 +12,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriBuilder;
-import org.springframework.web.util.UriComponentsBuilder;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.net.URL;
-import java.time.LocalDate;
 import java.util.List;
 
 @Service

@@ -2,7 +2,6 @@ package com.caroline.springbootmall.controller;
 
 import com.caroline.springbootmall.model.Company;
 import com.caroline.springbootmall.service.CompanyDownloadService;
-import com.caroline.springbootmall.service.CompanyService;
 import com.caroline.springbootmall.service.CompanySyncService;
 import com.caroline.springbootmall.service.UtilService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +36,12 @@ public class CompanyHouseIntegrateController {
         if(targetDate.substring(6,8).equals("01")){
             String formatedDate = utilService.formatDateString(targetDate, "-");
             companyDownloadService.downloadMonthlyCompanyData(formatedDate);
+
             return ResponseEntity.status(HttpStatus.OK).build();
         }else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+
 
 }

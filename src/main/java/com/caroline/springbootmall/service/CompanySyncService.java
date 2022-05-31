@@ -11,4 +11,5 @@ public interface CompanySyncService {
     Company syncCompanyByCompanyNum(String companyNum);
     Company syncAllCompany(List<String> companyNum);
 
+
 }
