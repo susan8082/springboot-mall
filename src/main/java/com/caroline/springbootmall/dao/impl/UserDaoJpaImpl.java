@@ -16,11 +16,8 @@ public class UserDaoJpaImpl implements UserDao {
     UserRepository userRepository;
 
     @Override
-    public User createUser(UserRegisterRequestDto dto) {
-
-        User user = UserRegisterRequestDto.convertToUser(dto);
-        userRepository.save(user);
-        return user;
+    public User createUser(User user) {
+        return  userRepository.save(user);
     }
 
     @Override

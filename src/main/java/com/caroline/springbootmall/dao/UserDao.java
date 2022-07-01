@@ -5,6 +5,6 @@ import com.caroline.springbootmall.model.User;
 
 public interface UserDao {
 
-     User createUser(UserRegisterRequestDto dto);
+     User createUser(User user);
      User getUserByEmail(String email);
 }
