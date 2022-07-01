@@ -20,7 +20,7 @@ public class UserServiceImpl implements UserService {
     UserDao userDao;
 
     @Override
-    public User createUser(UserRequestDto dto) {
+    public User register(UserRequestDto dto) {
 
         //check registering email
         User existUser= userDao.getUserByEmail(dto.getEmail());

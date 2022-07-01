@@ -5,6 +5,8 @@ import com.caroline.springbootmall.model.User;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -14,9 +16,10 @@ import java.time.LocalDateTime;
 public class UserRequestDto {
 
     private Integer userId;
-    @NotNull
+    @Email
+    @NotBlank
     private String email;
-    @NotNull
+    @NotBlank
     private String password;
 
     public static User convertToUser(UserRequestDto userDto) {
