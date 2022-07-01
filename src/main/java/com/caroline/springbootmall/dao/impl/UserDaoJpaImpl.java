@@ -2,7 +2,7 @@ package com.caroline.springbootmall.dao.impl;
 
 import com.caroline.springbootmall.dao.UserDao;
 import com.caroline.springbootmall.dao.repository.UserRepository;
-import com.caroline.springbootmall.dto.UserRequestDto;
+import com.caroline.springbootmall.dto.UserRegisterRequestDto;
 import com.caroline.springbootmall.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,9 +16,9 @@ public class UserDaoJpaImpl implements UserDao {
     UserRepository userRepository;
 
     @Override
-    public User createUser(UserRequestDto dto) {
+    public User createUser(UserRegisterRequestDto dto) {
 
-        User user = UserRequestDto.convertToUser(dto);
+        User user = UserRegisterRequestDto.convertToUser(dto);
         userRepository.save(user);
         return user;
     }

@@ -1,10 +1,10 @@
 package com.caroline.springbootmall.dao;
 
-import com.caroline.springbootmall.dto.UserRequestDto;
+import com.caroline.springbootmall.dto.UserRegisterRequestDto;
 import com.caroline.springbootmall.model.User;
 
 public interface UserDao {
 
-     User createUser(UserRequestDto dto);
+     User createUser(UserRegisterRequestDto dto);
      User getUserByEmail(String email);
 }

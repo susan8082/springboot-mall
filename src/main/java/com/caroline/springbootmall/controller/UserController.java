@@ -1,8 +1,7 @@
 package com.caroline.springbootmall.controller;
 
-import com.caroline.springbootmall.dto.CompanyRequestDto;
-import com.caroline.springbootmall.dto.UserRequestDto;
-import com.caroline.springbootmall.model.Company;
+import com.caroline.springbootmall.dto.UserLoginRequestDto;
+import com.caroline.springbootmall.dto.UserRegisterRequestDto;
 import com.caroline.springbootmall.model.User;
 import com.caroline.springbootmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +22,16 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("/users/register")
-    public ResponseEntity<User> register(@RequestBody @Valid UserRequestDto dto){
-       User newUser = userService.register(dto);
+    public ResponseEntity<User> register(@RequestBody @Valid UserRegisterRequestDto registerDto){
+       User newUser = userService.register(registerDto);
        return ResponseEntity.status(HttpStatus.CREATED).body(newUser);
     }
 
-
-//    @PostMapping("/companys")
-//    public ResponseEntity<Company> createCompany(@RequestBody @Valid CompanyRequestDto companyDto){
-//
-//        Company returnCompany = companyService.createCompany(companyDto);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(returnCompany);
-//    }
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequestDto loginDto ){
+        User user = userService.login(loginDto);
+        return ResponseEntity.status((HttpStatus.OK)).body(user);
+    }
 
 
 }

@@ -1,5 +1,6 @@
 package com.caroline.springbootmall.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -17,6 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
     private String email;
+    @JsonIgnore
     private String password;
     private LocalDate createdDate;
     private LocalDateTime lastModifiedTime;
