@@ -18,6 +18,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 
 @Validated
+@RequestMapping("/api")
 @RestController
 public class ProductController {
 

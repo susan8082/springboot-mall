@@ -9,12 +9,14 @@ import java.net.URISyntaxException;
 public class UtilService {
 
     public String buildUrlPath(String HttpOrHttps, String baseHost, String path){
+
+        String result = null;
         try {
-            return new URIBuilder().setScheme(HttpOrHttps).setHost(baseHost).setPath(path).build().toString();
+            result =  new URIBuilder().setScheme(HttpOrHttps).setHost(baseHost).setPath(path).build().toString();
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        return null;
+        return result;
     }
 
     //20180301 -> 2018-03-01

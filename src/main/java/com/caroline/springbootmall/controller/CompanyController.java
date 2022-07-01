@@ -22,6 +22,7 @@ import javax.validation.constraints.Min;
 
 
 @RestController
+@RequestMapping("/api")
 public class CompanyController {
 
     @Autowired
