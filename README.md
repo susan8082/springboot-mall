@@ -4,8 +4,7 @@ A shopping website practice using Java, SpringBoot, MySql
 # Requirements
 For building and running the application you need:
 
-JDK 1.8
-*MySql DataBase
+JDK 1.8 / MySql DataBase
 
 
 # Running the application locally
