@@ -58,22 +58,26 @@ public class ProductController {
 
     @DeleteMapping("/products/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable Integer productId){
-//        Product product = productService.getProductById(productId);
         productService.deleteProductById(productId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
     @GetMapping("/products")
     public ResponseEntity<ProductResponseDto> getAllProducts(
+            //Filtering
             @RequestParam(required = false) ProductCategory category, @RequestParam(required = false) String search,
+            //Paging
             @RequestParam(defaultValue = "0")  @Min(0) Integer pageIndex ,  @RequestParam(defaultValue = "5") @Max (1000) @Min(1) Integer size,
+            //Sort
             @RequestParam(defaultValue = "desc") String descOrAsc, @RequestParam(defaultValue = "price") String orderBy){
+
         ProductQueryParams productQueryParams = new ProductQueryParams();
         productQueryParams.setCategory(category);
         productQueryParams.setSearch(search);
         productQueryParams.setPageIndex(pageIndex);
         productQueryParams.setSize(size);
         productQueryParams.setSort(descOrAsc, orderBy);
+
         Page<Product> products = productService.getAllProducts(productQueryParams);
         ProductResponseDto resDto = new ProductResponseDto(category, search, pageIndex, size, descOrAsc, orderBy, products.getTotalElements(), products.getContent());
         return ResponseEntity.status(HttpStatus.OK).body(resDto);
