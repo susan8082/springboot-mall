@@ -22,8 +22,9 @@ public class UserDaoJpaImpl implements UserDao {
 
     @Override
     public User getUserByEmail(String email) {
-
+        System.out.println("getUserByEmail:"+email);
         List<User> users = userRepository.findByEmail(email);
+        System.out.println("users.size:"+users.size());
         if (users.size()>0){
             return users.get(0);
         }else{
