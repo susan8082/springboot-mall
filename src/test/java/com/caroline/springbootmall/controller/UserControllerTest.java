@@ -135,7 +135,7 @@ class UserControllerTest {
 
         //register
         UserRegisterRequestDto userRegisterRequest = new UserRegisterRequestDto();
-        userRegisterRequest.setEmail("test@gmail.com");
+        userRegisterRequest.setEmail("test5@gmail.com");
         userRegisterRequest.setPassword("123");
 
         register(userRegisterRequest);
@@ -159,7 +159,27 @@ class UserControllerTest {
 
         //login without register
         UserRegisterRequestDto userRegisterRequest = new UserRegisterRequestDto();
-        userRegisterRequest.setEmail("test@gmail.com");
+        userRegisterRequest.setEmail("test6@gmail.com");
+        userRegisterRequest.setPassword("123");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(userRegisterRequest);
+
+        RequestBuilder requestBuilderLogin = MockMvcRequestBuilders.post("/api/users/login")
+                .contentType(MediaType.APPLICATION_JSON).content(json);
+
+        mockMvc.perform(requestBuilderLogin)
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    @Transactional
+    public void login_invalidEmailFormat() throws Exception {
+
+        //login
+        UserRegisterRequestDto userRegisterRequest = new UserRegisterRequestDto();
+        userRegisterRequest.setEmail("test7");
         userRegisterRequest.setPassword("123");
 
         ObjectMapper objectMapper = new ObjectMapper();
