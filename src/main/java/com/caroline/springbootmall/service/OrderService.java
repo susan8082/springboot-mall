@@ -9,4 +9,6 @@ public interface OrderService {
     Integer createOrder(Integer userId, OrderCreateRequestDto createOrderRequestDto);
 
     List<Order> getUserOrders(Integer userId);
+
+    Order getOrderById(Integer orderId);
 }

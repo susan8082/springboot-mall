@@ -19,9 +19,10 @@ public class OrderController {
     private OrderService orderService;
 
     @PostMapping("/users/{userId}/orders")
-    public ResponseEntity<Integer> createOrder(@PathVariable Integer userId, @RequestBody @Valid OrderCreateRequestDto orderRequestDto){
+    public ResponseEntity<Order> createOrder(@PathVariable Integer userId, @RequestBody @Valid OrderCreateRequestDto orderRequestDto){
         Integer orderId = orderService.createOrder(userId, orderRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
+        Order order = orderService.getOrderById(orderId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(order);
     }
 
     @GetMapping("/users/{userId}/orders")
