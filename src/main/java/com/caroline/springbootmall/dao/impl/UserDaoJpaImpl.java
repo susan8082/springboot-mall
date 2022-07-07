@@ -31,4 +31,14 @@ public class UserDaoJpaImpl implements UserDao {
             return null;
         }
     }
+
+    @Override
+    public User findUserById(Integer userId) {
+        List<User> users = userRepository.findByUserId(userId);
+        if (users.size()>0){
+            return users.get(0);
+        }else{
+            return null;
+        }
+    }
 }

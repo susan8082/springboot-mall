@@ -1,24 +1,24 @@
 package com.caroline.springbootmall.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
 @Entity
-public class User {
+@Getter
+@Setter
+@Table(name = "`order`")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer orderId;
+    private Integer totalAmount;
+    private LocalDateTime createdDate;
+    private LocalDateTime lastModifiedDate;
     private Integer userId;
-    private String email;
-    @JsonIgnore
-    private String password;
-    private LocalDate createdDate;
-    private LocalDateTime lastModifiedTime;
-
 }
