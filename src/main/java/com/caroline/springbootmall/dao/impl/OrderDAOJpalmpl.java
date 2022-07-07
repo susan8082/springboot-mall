@@ -6,15 +6,14 @@ import com.caroline.springbootmall.dao.UserDao;
 import com.caroline.springbootmall.dao.repository.OrderItemRepository;
 import com.caroline.springbootmall.dao.repository.OrderRepository;
 import com.caroline.springbootmall.dao.repository.UserRepository;
-import com.caroline.springbootmall.dto.BuyItem;
 import com.caroline.springbootmall.dto.OrderCreateRequestDto;
 import com.caroline.springbootmall.model.Order;
 import com.caroline.springbootmall.model.OrderItem;
+import com.caroline.springbootmall.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -50,11 +49,6 @@ public class OrderDAOJpalmpl implements OrderDao {
     }
 
     @Override
-    public List<Order> getUserOrders(Integer userId) {
-        return orderRepo.findByUserId(userId);
-    }
-
-    @Override
     public Order getOrderById(Integer orderId) {
         List<Order> orders = orderRepo.findByOrderId(orderId);
         if(orders.size()>0){
@@ -63,4 +57,23 @@ public class OrderDAOJpalmpl implements OrderDao {
             return null;
         }
     }
+
+    @Override
+    public List<OrderItem> getOrderItemsByOrderId(Integer orderId) {
+        List<OrderItem> orderItems = orderItemRepo.findByOrderId(orderId);
+        orderItems.forEach(item->{
+            Product product =   productDao.getProductById(item.getProductId());
+            item.setProductId(product.getProductId());
+            item.setProductName(product.getProductName());
+            item.setImageUrl(product.getImageUrl());
+         }
+        );
+        return orderItems;
+    }
+
+    @Override
+    public List<Order> getUserOrders(Integer userId) {
+        return orderRepo.findByUserId(userId);
+    }
+
 }

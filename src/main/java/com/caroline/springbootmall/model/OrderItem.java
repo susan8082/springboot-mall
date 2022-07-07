@@ -14,6 +14,10 @@ public class OrderItem {
     private Integer orderItemId;
     private Integer orderId;
     private Integer productId;
+    @Transient
+    private String productName;
+    @Transient
+    private String imageUrl;
     private Integer quantity;
     private Integer amount;
 }

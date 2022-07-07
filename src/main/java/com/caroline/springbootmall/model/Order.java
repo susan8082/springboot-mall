@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,4 +20,6 @@ public class Order {
     private LocalDateTime createdDate;
     private LocalDateTime lastModifiedDate;
     private Integer userId;
+    @Transient
+    private List<OrderItem> orderItems;
 }

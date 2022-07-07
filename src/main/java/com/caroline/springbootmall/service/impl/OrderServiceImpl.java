@@ -81,6 +81,8 @@ public class OrderServiceImpl implements OrderService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
 
+        List<OrderItem> orderItems = orderDao.getOrderItemsByOrderId(orderId);
+        existOrder.setOrderItems(orderItems);
         return existOrder;
     }
 }
