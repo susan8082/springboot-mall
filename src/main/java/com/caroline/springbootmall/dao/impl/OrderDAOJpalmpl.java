@@ -5,17 +5,14 @@ import com.caroline.springbootmall.dao.ProductDao;
 import com.caroline.springbootmall.dao.UserDao;
 import com.caroline.springbootmall.dao.repository.OrderItemRepository;
 import com.caroline.springbootmall.dao.repository.OrderRepository;
-import com.caroline.springbootmall.dao.repository.ProductRepository;
 import com.caroline.springbootmall.dao.repository.UserRepository;
 import com.caroline.springbootmall.dto.BuyItem;
 import com.caroline.springbootmall.dto.OrderCreateRequestDto;
 import com.caroline.springbootmall.model.Order;
 import com.caroline.springbootmall.model.OrderItem;
-import com.caroline.springbootmall.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,35 +32,21 @@ public class OrderDAOJpalmpl implements OrderDao {
     private UserDao userDao;
 
     @Override
-    public Order createOrder(Integer userId, OrderCreateRequestDto dto) {
+    public Integer createOrder(Integer userId, OrderCreateRequestDto dto, Integer totalAmount) {
 
-        //set orderItems
-        List<OrderItem> orderItems = new ArrayList<>();
-        dto.getItems().forEach(item-> {
-        orderItems.add(OrderItem.getOrderItem(productDao.getProductById(item.getProductId()), item.getQuantity()));
-        });
-
-        //caculate totalAmount
-        Integer totalAmount = 0;
-        for (OrderItem item : orderItems) {
-            totalAmount += item.getAmount();
-        }
-
-        //save order
         Order order = new Order();
         order.setUserId(userId);
         order.setCreatedDate(LocalDateTime.now());
         order.setLastModifiedDate(LocalDateTime.now());
         order.setTotalAmount(totalAmount);
         Order newOrder = orderRepo.save(order);
+        return  newOrder.getOrderId();
+    }
 
-        //save orderItems
-        for (OrderItem item : orderItems) {
-           item.setOrderId(newOrder.getOrderId());
-        }
+    @Override
+    public void createOrderItems(Integer orderId ,List<OrderItem> orderItems) {
+        orderItems.forEach(item->item.setOrderId(orderId));
         orderItemRepo.saveAll(orderItems);
-
-        return  newOrder;
     }
 
     @Override

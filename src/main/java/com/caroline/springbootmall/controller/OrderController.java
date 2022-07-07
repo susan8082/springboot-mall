@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -17,13 +18,13 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @PostMapping("/{userId}/orders")
-    public ResponseEntity<Order> createOrder(@PathVariable Integer userId, @RequestBody OrderCreateRequestDto orderRequestDto){
-        Order order = orderService.createOrder(userId, orderRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(order);
+    @PostMapping("/users/{userId}/orders")
+    public ResponseEntity<Integer> createOrder(@PathVariable Integer userId, @RequestBody @Valid OrderCreateRequestDto orderRequestDto){
+        Integer orderId = orderService.createOrder(userId, orderRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderId);
     }
 
-    @GetMapping("/{userId}/orders/")
+    @GetMapping("/users/{userId}/orders")
     public ResponseEntity<List<Order>> getUserOrders(@PathVariable Integer userId){
         List<Order> orders = orderService.getUserOrders(userId);
         return ResponseEntity.status(HttpStatus.OK).body(orders);

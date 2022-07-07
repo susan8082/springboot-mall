@@ -16,13 +16,4 @@ public class OrderItem {
     private Integer productId;
     private Integer quantity;
     private Integer amount;
-
-    public static OrderItem getOrderItem(Product product, Integer quantity){
-        OrderItem orderItem = new OrderItem();
-        orderItem.setProductId(product.getProductId());
-        orderItem.setQuantity(quantity);
-        orderItem.setAmount(product.getPrice()*quantity);
-        return orderItem;
-    }
-
 }
