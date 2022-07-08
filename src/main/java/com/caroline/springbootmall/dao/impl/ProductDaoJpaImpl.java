@@ -5,6 +5,7 @@ import com.caroline.springbootmall.dao.ProductDao;
 import com.caroline.springbootmall.dao.repository.ProductRepository;
 import com.caroline.springbootmall.dto.ProductQueryParams;
 import com.caroline.springbootmall.dto.ProductRequestDto;
+import com.caroline.springbootmall.model.OrderItem;
 import com.caroline.springbootmall.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -54,7 +56,6 @@ public class ProductDaoJpaImpl implements ProductDao {
     @Override
     public void deleteProductById(Integer productId) {
         Integer result = productRepo.deleteProductByProductId(productId);
-        System.out.println("deleteProductById:"+result);
     }
 
     @Override
@@ -72,6 +73,18 @@ public class ProductDaoJpaImpl implements ProductDao {
             return productRepo.findAll(paging);
         }
 
+    }
+
+    @Override
+    public void updateProductInventory(List<OrderItem> orderItems) {
+        List<Product> products = new ArrayList<>();
+        orderItems.forEach(item->{
+         Product product = productRepo.findByProductId(item.getProductId()).get(0);
+            product.setStock(product.getStock()-item.getQuantity());
+            product.setLastModifiedDate(LocalDateTime.now());
+            products.add(product);
+        });
+        productRepo.saveAll(products);
     }
 
 }

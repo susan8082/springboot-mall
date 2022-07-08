@@ -34,16 +34,24 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional
     public Integer createOrder(Integer userId, OrderCreateRequestDto createOrderRequestDto) {
+        //check user
+        checkIfUserExist(userId);
 
+       //conver BuyItem to orderItem
         List<OrderItem> orderItems = new ArrayList<>();
-
         Integer totalAmount = 0;
         for (BuyItem buyItem : createOrderRequestDto.getBuyItemList()) {
-            Product product = productDao.getProductById(buyItem.getProductId());
 
             //caculate amount and totalAmount
+            Product product = productDao.getProductById(buyItem.getProductId());
             Integer amount = product.getPrice() * buyItem.getQuantity();
             totalAmount += amount;
+
+            //check stock
+            if(product.getStock() < buyItem.getQuantity()){
+                log.warn("product:{}/stock:{} is not enough or out of stock.", product.getProductName(), product.getStock());
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
 
             //set orderItems
             OrderItem orderItem = new OrderItem();
@@ -59,16 +67,15 @@ public class OrderServiceImpl implements OrderService {
         //create orderItem
         orderDao.createOrderItems(newOrderId,orderItems);
 
+        //update stock
+        productDao.updateProductInventory(orderItems);
+
         return newOrderId;
     }
 
     @Override
     public List<Order> getUserOrders(Integer userId) {
-        User user = userDao.findUserById(userId);
-        if(user == null){
-            log.warn("userId:{} not found.", userId);
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+        checkIfUserExist(userId);
         return orderDao.getUserOrders(userId);
     }
 
@@ -84,5 +91,13 @@ public class OrderServiceImpl implements OrderService {
         List<OrderItem> orderItems = orderDao.getOrderItemsByOrderId(orderId);
         existOrder.setOrderItems(orderItems);
         return existOrder;
+    }
+
+    private void checkIfUserExist(Integer userId){
+        User user = userDao.findUserById(userId);
+        if(user == null){
+            log.warn("userId:{} not found.", userId);
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
