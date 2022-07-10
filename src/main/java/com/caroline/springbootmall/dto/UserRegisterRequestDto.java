@@ -14,6 +14,8 @@ import java.time.LocalDateTime;
 public class UserRegisterRequestDto {
 
     private Integer userId;
+    @NotBlank
+    private String userName;
     @Email
     @NotBlank
     private String email;
@@ -27,6 +29,7 @@ public class UserRegisterRequestDto {
         }else{
             user.setCreatedDate(LocalDate.now());
         }
+        user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
         user.setPassword(userDto.getPassword());
         user.setLastModifiedTime(LocalDateTime.now());

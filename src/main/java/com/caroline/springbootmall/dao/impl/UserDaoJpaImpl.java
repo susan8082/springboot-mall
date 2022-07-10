@@ -2,7 +2,6 @@ package com.caroline.springbootmall.dao.impl;
 
 import com.caroline.springbootmall.dao.UserDao;
 import com.caroline.springbootmall.dao.repository.UserRepository;
-import com.caroline.springbootmall.dto.UserRegisterRequestDto;
 import com.caroline.springbootmall.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
