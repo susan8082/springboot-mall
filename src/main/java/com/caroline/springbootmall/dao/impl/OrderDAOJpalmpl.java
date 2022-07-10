@@ -73,9 +73,7 @@ public class OrderDAOJpalmpl implements OrderDao {
 
     @Override
     public List<Order> getUserOrders(Integer userId) {
-
-
-        return orderRepo.findByUserId(userId);
+        return orderRepo.findByUserIdOrderByCreatedDateDesc(userId);
     }
 
 }
