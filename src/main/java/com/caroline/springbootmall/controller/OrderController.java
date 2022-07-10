@@ -1,6 +1,7 @@
 package com.caroline.springbootmall.controller;
 
 import com.caroline.springbootmall.dto.OrderCreateRequestDto;
+import com.caroline.springbootmall.dto.OrderResponseDto;
 import com.caroline.springbootmall.model.Order;
 import com.caroline.springbootmall.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,8 +27,11 @@ public class OrderController {
     }
 
     @GetMapping("/users/{userId}/orders")
-    public ResponseEntity<List<Order>> getUserOrders(@PathVariable Integer userId){
+    public ResponseEntity<OrderResponseDto> getUserOrders(@PathVariable Integer userId){
         List<Order> orders = orderService.getUserOrders(userId);
-        return ResponseEntity.status(HttpStatus.OK).body(orders);
+        OrderResponseDto orderResponseDto = new OrderResponseDto();
+        orderResponseDto.setResults(orders);
+        orderResponseDto.setTotalCount(orders.size());
+        return ResponseEntity.status(HttpStatus.OK).body(orderResponseDto);
     }
 }

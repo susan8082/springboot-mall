@@ -44,6 +44,11 @@ public class OrderServiceImpl implements OrderService {
 
             //caculate amount and totalAmount
             Product product = productDao.getProductById(buyItem.getProductId());
+            if(product == null){
+                log.warn("productId:{} is not fount.", buyItem.getProductId());
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            }
+
             Integer amount = product.getPrice() * buyItem.getQuantity();
             totalAmount += amount;
 
@@ -104,4 +109,5 @@ public class OrderServiceImpl implements OrderService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
     }
+
 }

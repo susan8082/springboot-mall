@@ -20,4 +20,22 @@ CREATE TABLE IF NOT EXISTS user
     last_modified_time TIMESTAMP    NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS "order"
+(
+    order_id           INT       NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id            INT       NOT NULL,
+    total_amount       INT       NOT NULL,
+    created_date       TIMESTAMP NOT NULL,
+    last_modified_date TIMESTAMP NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS order_item
+(
+    order_item_id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    product_id    INT NOT NULL,
+    order_id    INT NOT NULL,
+    quantity      INT NOT NULL,
+    amount        INT NOT NULL
+);
+
 
