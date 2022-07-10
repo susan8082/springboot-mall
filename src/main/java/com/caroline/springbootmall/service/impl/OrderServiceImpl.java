@@ -76,7 +76,11 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public List<Order> getUserOrders(Integer userId) {
         checkIfUserExist(userId);
-        return orderDao.getUserOrders(userId);
+
+        //setOrderItems
+        List<Order> orders = orderDao.getUserOrders(userId);
+        orders.forEach(order->order.setOrderItems(orderDao.getOrderItemsByOrderId(order.getOrderId())));
+        return orders;
     }
 
     @Override
